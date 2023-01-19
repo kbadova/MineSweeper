@@ -188,7 +188,8 @@ int countTheNumberOfMines(char playerBoard[max_X_coordinate][max_Y_coordinate], 
 void addNumberToBoard(char board[max_X_coordinate][max_Y_coordinate], char helpingBoard[max_X_coordinate][max_Y_coordinate], int x_coordinate, int y_coordinate, int matrix_dimension)
 {
     int resultCountTheNumberOfMines = countTheNumberOfMines(helpingBoard, x_coordinate, y_coordinate, matrix_dimension);
-   
+    
+    // TODO; DROP the cin
     cout << "resultCountTheNumberOfMines " << resultCountTheNumberOfMines;
 
     board[x_coordinate][y_coordinate] = (char)resultCountTheNumberOfMines;
@@ -197,6 +198,77 @@ void addNumberToBoard(char board[max_X_coordinate][max_Y_coordinate], char helpi
 void makeSquareOpened(char board[max_X_coordinate][max_Y_coordinate], int x_coordinate, int y_coordinate)
 {
     board[x_coordinate][y_coordinate] = 'O';
+}
+
+void getNeighboursCoordinates(int neighboursCoordinates[max_X_coordinate] ,char board[max_X_coordinate][max_Y_coordinate], int x_coordinate, int y_coordinate, int matrix_dimension)
+{
+    if (y_coordinate + 1 >= 0 && y_coordinate + 1 < matrix_dimension)
+    {
+
+        neighboursCoordinates[0] = {x_coordinate, y_coordinate + 1};
+        // neighboursCoordinates[x_coordinate][y_coordinate + 1] = {x_coordinate, y_coordinate + 1}
+        // neighboursCoordinates[x_coordinate][y_coordinate] = x_coordinate
+        // neighboursCoordinates[x_coordinate][y_coordinate + 1] = y_coordinate + 1
+    }
+
+    if (y_coordinate + 1 >= 0 && y_coordinate + 1 < matrix_dimension && x_coordinate + 1 >= 0 && x_coordinate + 1 < matrix_dimension)
+    {
+        
+        neighboursCoordinates[1] = {x_coordinate + 1, y_coordinate + 1};
+        // neighboursCoordinates[x_coordinate + 1][y_coordinate + 1] = {x_coordinate + 1, y_coordinate + 1}
+        // neighboursCoordinates[x_coordinate + 1][y_coordinate] = x_coordinate + 1
+        // neighboursCoordinates[x_coordinate + 1][y_coordinate + 1] = y_coordinate + 1
+
+    }
+
+    if (x_coordinate + 1 >= 0 && x_coordinate + 1 < matrix_dimension)
+    {
+
+        neighboursCoordinates[2] = {x_coordinate + 1, y_coordinate};
+        // neighboursCoordinates[x_coordinate + 1][y_coordinate] = {x_coordinate + 1, y_coordinate}
+        neighboursCoordinates[x_coordinate + 1][y_coordinate] = x_coordinate + 1
+        neighboursCoordinates[x_coordinate + 1][y_coordinate] = {x_coordinate + 1, y_coordinate}
+
+    }
+
+    if (x_coordinate + 1 >= 0 && x_coordinate + 1 < matrix_dimension && y_coordinate - 1 >= 0 && y_coordinate - 1 < matrix_dimension)
+    {
+        neighboursCoordinates[3] = {x_coordinate + 1, y_coordinate - 1};
+        // neighboursCoordinates[x_coordinate + 1][y_coordinate - 1] = {x_coordinate + 1, y_coordinate - 1}
+
+    }
+
+    if (y_coordinate - 1 >= 0 && y_coordinate - 1 < matrix_dimension)
+    {
+
+        neighboursCoordinates[4] = {x_coordinate, y_coordinate - 1};
+        // neighboursCoordinates[x_coordinate][y_coordinate - 1] = {x_coordinate, y_coordinate - 1}
+
+    }
+
+    if (x_coordinate - 1 >= 0 && x_coordinate - 1 < matrix_dimension && y_coordinate - 1 >= 0 && y_coordinate - 1 < matrix_dimension)
+    {
+
+        neighboursCoordinates[5] = {x_coordinate - 1, y_coordinate - 1};
+        // neighboursCoordinates[x_coordinate - 1][y_coordinate - 1] = {x_coordinate - 1, y_coordinate - 1}
+
+    }
+
+    if (x_coordinate - 1 >= 0 && x_coordinate - 1 < matrix_dimension)
+    {
+
+        neighboursCoordinates[6] = {x_coordinate - 1, y_coordinate};
+        // neighboursCoordinates[x_coordinate - 1][y_coordinate] = {x_coordinate - 1, y_coordinate}
+
+    }
+
+    if (x_coordinate - 1 >= 0 && x_coordinate - 1 < matrix_dimension && y_coordinate + 1 >= 0 && y_coordinate + 1 < matrix_dimension)
+    {
+
+        neighboursCoordinates[7] = {x_coordinate - 1, y_coordinate + 1};
+        // neighboursCoordinates[x_coordinate - 1][y_coordinate + 1] = {x_coordinate - 1, y_coordinate + 1}
+
+    }
 }
 
 bool openSquare(char playerBoard[max_X_coordinate][max_Y_coordinate], char helpingBoard[max_X_coordinate][max_Y_coordinate], int x_coordinate, int y_coordinate, int matrix_dimension)
@@ -208,6 +280,7 @@ bool openSquare(char playerBoard[max_X_coordinate][max_Y_coordinate], char helpi
     }
  
     bool resultHasMinesNeighbour = hasMinesNeighbour(helpingBoard, x_coordinate, y_coordinate, matrix_dimension);
+
     if (resultHasMinesNeighbour == true)
     {
         addNumberToBoard(playerBoard, helpingBoard, x_coordinate, y_coordinate, matrix_dimension);
@@ -228,38 +301,60 @@ bool openSquare(char playerBoard[max_X_coordinate][max_Y_coordinate], char helpi
         cout << "Helping board visualization:"  << endl;
         print(helpingBoard, matrix_dimension);
 
-        if (y_coordinate + 1 >= 0 && y_coordinate + 1 < matrix_dimension)
-        {
-            openSquare(playerBoard, helpingBoard, x_coordinate, y_coordinate + 1, matrix_dimension);
-        }
-        if (y_coordinate + 1 >= 0 && y_coordinate + 1 < matrix_dimension && x_coordinate + 1 >= 0 && x_coordinate + 1 < matrix_dimension)
-        {
-            openSquare(playerBoard, helpingBoard, x_coordinate + 1, y_coordinate + 1, matrix_dimension);
-        }
-        if (x_coordinate + 1 >= 0 && x_coordinate + 1 < matrix_dimension)
-        {
-            openSquare(playerBoard, helpingBoard, x_coordinate + 1, y_coordinate, matrix_dimension);
-        }
-        if (x_coordinate + 1 >= 0 && x_coordinate + 1 < matrix_dimension && y_coordinate - 1 >= 0 && y_coordinate - 1 < matrix_dimension)
-        {
-            openSquare(playerBoard, helpingBoard, x_coordinate + 1, y_coordinate - 1, matrix_dimension);
-        }
-        if (y_coordinate - 1 >= 0 && y_coordinate - 1 < matrix_dimension)
-        {
-            openSquare(playerBoard, helpingBoard, x_coordinate, y_coordinate - 1, matrix_dimension);
-        }
-        if (x_coordinate - 1 >= 0 && x_coordinate - 1 < matrix_dimension && y_coordinate - 1 >= 0 && y_coordinate - 1 < matrix_dimension)
-        {
-            openSquare(playerBoard, helpingBoard, x_coordinate - 1, y_coordinate - 1, matrix_dimension);
-        }
-        if (x_coordinate - 1 >= 0 && x_coordinate - 1 < matrix_dimension)
-        {
-            openSquare(playerBoard, helpingBoard, x_coordinate - 1, y_coordinate, matrix_dimension);
-        }
-        if (x_coordinate - 1 >= 0 && x_coordinate - 1 < matrix_dimension && y_coordinate + 1 >= 0 && y_coordinate + 1 < matrix_dimension)
-        {
-            openSquare(playerBoard, helpingBoard, x_coordinate - 1, y_coordinate + 1, matrix_dimension);
-        }
+        // Call openSquare for all possible neighbours that are not mines
+        // for neighbourCoordinate in neighboursCoordinates:
+        //     openSquare(playerBoard, helpingBoard, neighbourCoordinateX, neighbourCoordinateY, matrix_dimension)
+
+        int neighboursCoordinates[8] = {};
+        getNeighboursCoordinates(neighboursCoordinates, helpingBoard, x_coordinate, y_coordinate, matrix_dimension);
+
+        cout << "neighboursCoordinates", neighboursCoordinates;
+
+        // if (y_coordinate + 1 >= 0 && y_coordinate + 1 < matrix_dimension)
+        // {
+        //     cout << "here";
+        //     openSquare(playerBoard, helpingBoard, x_coordinate, y_coordinate + 1, matrix_dimension);
+        // }
+        // if (y_coordinate + 1 >= 0 && y_coordinate + 1 < matrix_dimension && x_coordinate + 1 >= 0 && x_coordinate + 1 < matrix_dimension)
+        // {
+        //     cout << "here1";
+        //     openSquare(playerBoard, helpingBoard, x_coordinate + 1, y_coordinate + 1, matrix_dimension);
+        // }
+        // if (x_coordinate + 1 >= 0 && x_coordinate + 1 < matrix_dimension)
+        // {
+        //     cout << "here2";
+        //     openSquare(playerBoard, helpingBoard, x_coordinate + 1, y_coordinate, matrix_dimension);
+        // }
+        // if (x_coordinate + 1 >= 0 && x_coordinate + 1 < matrix_dimension && y_coordinate - 1 >= 0 && y_coordinate - 1 < matrix_dimension)
+        // {
+        //     cout << "here3";
+
+        //     openSquare(playerBoard, helpingBoard, x_coordinate + 1, y_coordinate - 1, matrix_dimension);
+        // }
+        // if (y_coordinate - 1 >= 0 && y_coordinate - 1 < matrix_dimension)
+        // {
+        //     cout << "here4";
+
+        //     openSquare(playerBoard, helpingBoard, x_coordinate, y_coordinate - 1, matrix_dimension);
+        // }
+        // if (x_coordinate - 1 >= 0 && x_coordinate - 1 < matrix_dimension && y_coordinate - 1 >= 0 && y_coordinate - 1 < matrix_dimension)
+        // {
+        //     cout << "here5";
+
+        //     openSquare(playerBoard, helpingBoard, x_coordinate - 1, y_coordinate - 1, matrix_dimension);
+        // }
+        // if (x_coordinate - 1 >= 0 && x_coordinate - 1 < matrix_dimension)
+        // {
+        //     cout << "here6";
+
+        //     openSquare(playerBoard, helpingBoard, x_coordinate - 1, y_coordinate, matrix_dimension);
+        // }
+        // if (x_coordinate - 1 >= 0 && x_coordinate - 1 < matrix_dimension && y_coordinate + 1 >= 0 && y_coordinate + 1 < matrix_dimension)
+        // {
+        //     cout << "here7";
+
+        //     openSquare(playerBoard, helpingBoard, x_coordinate - 1, y_coordinate + 1, matrix_dimension);
+        // }
 
     }
 }
