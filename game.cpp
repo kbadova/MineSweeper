@@ -52,6 +52,7 @@ void addMinesToBoard(char playerBoard[max_X_coordinate][max_Y_coordinate], int e
         playerBoard[randomRow][randomColumn] = '@';
     }
 }
+
 bool hasMinesNeighbour(char helpingBoard[max_X_coordinate][max_Y_coordinate], int x_coordinate, int  y_coordinate, int matrix_dimension)
 {
     if (y_coordinate + 1 >= 0 && y_coordinate + 1 < matrix_dimension)
@@ -200,75 +201,45 @@ void makeSquareOpened(char board[max_X_coordinate][max_Y_coordinate], int x_coor
     board[x_coordinate][y_coordinate] = 'O';
 }
 
-void getNeighboursCoordinates(int neighboursCoordinates[max_X_coordinate] ,char board[max_X_coordinate][max_Y_coordinate], int x_coordinate, int y_coordinate, int matrix_dimension)
+bool isNeighbour(char helpingBoard[max_X_coordinate][max_Y_coordinate], int initialElementX, int initialElementY, int possibleNeighbourX, int possibleNeighbourY)
 {
-    if (y_coordinate + 1 >= 0 && y_coordinate + 1 < matrix_dimension)
-    {
-
-        neighboursCoordinates[0] = {x_coordinate, y_coordinate + 1};
-        // neighboursCoordinates[x_coordinate][y_coordinate + 1] = {x_coordinate, y_coordinate + 1}
-        // neighboursCoordinates[x_coordinate][y_coordinate] = x_coordinate
-        // neighboursCoordinates[x_coordinate][y_coordinate + 1] = y_coordinate + 1
+    if (initialElementX - 1 == possibleNeighbourX && initialElementY == possibleNeighbourY) {
+        return true
     }
 
-    if (y_coordinate + 1 >= 0 && y_coordinate + 1 < matrix_dimension && x_coordinate + 1 >= 0 && x_coordinate + 1 < matrix_dimension)
+    if (initialElementX - 1 == possibleNeighbourX && initialElementY + 1 == possibleNeighbourY)
     {
-        
-        neighboursCoordinates[1] = {x_coordinate + 1, y_coordinate + 1};
-        // neighboursCoordinates[x_coordinate + 1][y_coordinate + 1] = {x_coordinate + 1, y_coordinate + 1}
-        // neighboursCoordinates[x_coordinate + 1][y_coordinate] = x_coordinate + 1
-        // neighboursCoordinates[x_coordinate + 1][y_coordinate + 1] = y_coordinate + 1
+        return true
+    };
 
-    }
-
-    if (x_coordinate + 1 >= 0 && x_coordinate + 1 < matrix_dimension)
+    if (initialElementX == possibleNeighbourX && initialElementY + 1 == possibleNeighbourY)
     {
+        return true
+    };
 
-        neighboursCoordinates[2] = {x_coordinate + 1, y_coordinate};
-        // neighboursCoordinates[x_coordinate + 1][y_coordinate] = {x_coordinate + 1, y_coordinate}
-        neighboursCoordinates[x_coordinate + 1][y_coordinate] = x_coordinate + 1
-        neighboursCoordinates[x_coordinate + 1][y_coordinate] = {x_coordinate + 1, y_coordinate}
+    if (initialElementX + 1 == possibleNeighbourX && initialElementY + 1 == possibleNeighbourY){
+        return true
+    };
 
-    }
-
-    if (x_coordinate + 1 >= 0 && x_coordinate + 1 < matrix_dimension && y_coordinate - 1 >= 0 && y_coordinate - 1 < matrix_dimension)
+    if (initialElementX + 1 == possibleNeighbourX && initialElementY == possibleNeighbourY)
     {
-        neighboursCoordinates[3] = {x_coordinate + 1, y_coordinate - 1};
-        // neighboursCoordinates[x_coordinate + 1][y_coordinate - 1] = {x_coordinate + 1, y_coordinate - 1}
+        return true
+    };
 
-    }
+    if (initialElementX + 1 == possibleNeighbourX && initialElementY - 1 == possibleNeighbourY) {
+        return true
+    };
 
-    if (y_coordinate - 1 >= 0 && y_coordinate - 1 < matrix_dimension)
+    if (initialElementX - 1 == possibleNeighbourX && initialElementY + 1 == possibleNeighbourY)
     {
+        return true
+    };
 
-        neighboursCoordinates[4] = {x_coordinate, y_coordinate - 1};
-        // neighboursCoordinates[x_coordinate][y_coordinate - 1] = {x_coordinate, y_coordinate - 1}
+    if (initialElementX - 1 == possibleNeighbourX && initialElementY - 1 == possibleNeighbourY) {
+        return true
+    };
 
-    }
-
-    if (x_coordinate - 1 >= 0 && x_coordinate - 1 < matrix_dimension && y_coordinate - 1 >= 0 && y_coordinate - 1 < matrix_dimension)
-    {
-
-        neighboursCoordinates[5] = {x_coordinate - 1, y_coordinate - 1};
-        // neighboursCoordinates[x_coordinate - 1][y_coordinate - 1] = {x_coordinate - 1, y_coordinate - 1}
-
-    }
-
-    if (x_coordinate - 1 >= 0 && x_coordinate - 1 < matrix_dimension)
-    {
-
-        neighboursCoordinates[6] = {x_coordinate - 1, y_coordinate};
-        // neighboursCoordinates[x_coordinate - 1][y_coordinate] = {x_coordinate - 1, y_coordinate}
-
-    }
-
-    if (x_coordinate - 1 >= 0 && x_coordinate - 1 < matrix_dimension && y_coordinate + 1 >= 0 && y_coordinate + 1 < matrix_dimension)
-    {
-
-        neighboursCoordinates[7] = {x_coordinate - 1, y_coordinate + 1};
-        // neighboursCoordinates[x_coordinate - 1][y_coordinate + 1] = {x_coordinate - 1, y_coordinate + 1}
-
-    }
+    return false
 }
 
 bool openSquare(char playerBoard[max_X_coordinate][max_Y_coordinate], char helpingBoard[max_X_coordinate][max_Y_coordinate], int x_coordinate, int y_coordinate, int matrix_dimension)
@@ -302,60 +273,16 @@ bool openSquare(char playerBoard[max_X_coordinate][max_Y_coordinate], char helpi
         print(helpingBoard, matrix_dimension);
 
         // Call openSquare for all possible neighbours that are not mines
-        // for neighbourCoordinate in neighboursCoordinates:
-        //     openSquare(playerBoard, helpingBoard, neighbourCoordinateX, neighbourCoordinateY, matrix_dimension)
+        for (int i = 0; i < matrix_dimension; i++)
+            {
+                for (int j = 0; j < matrix_dimension; j++)
+                {
+                    if (helpingBoard[i][j] == '*' && isNeighbour(helpingBoard, x_coordinate, y_coordinate, i, j)) {
+                        openSquare(playerBoard, helpingBoard, i, j, matrix_dimension);
+                    }
 
-        int neighboursCoordinates[8] = {};
-        getNeighboursCoordinates(neighboursCoordinates, helpingBoard, x_coordinate, y_coordinate, matrix_dimension);
-
-        cout << "neighboursCoordinates", neighboursCoordinates;
-
-        // if (y_coordinate + 1 >= 0 && y_coordinate + 1 < matrix_dimension)
-        // {
-        //     cout << "here";
-        //     openSquare(playerBoard, helpingBoard, x_coordinate, y_coordinate + 1, matrix_dimension);
-        // }
-        // if (y_coordinate + 1 >= 0 && y_coordinate + 1 < matrix_dimension && x_coordinate + 1 >= 0 && x_coordinate + 1 < matrix_dimension)
-        // {
-        //     cout << "here1";
-        //     openSquare(playerBoard, helpingBoard, x_coordinate + 1, y_coordinate + 1, matrix_dimension);
-        // }
-        // if (x_coordinate + 1 >= 0 && x_coordinate + 1 < matrix_dimension)
-        // {
-        //     cout << "here2";
-        //     openSquare(playerBoard, helpingBoard, x_coordinate + 1, y_coordinate, matrix_dimension);
-        // }
-        // if (x_coordinate + 1 >= 0 && x_coordinate + 1 < matrix_dimension && y_coordinate - 1 >= 0 && y_coordinate - 1 < matrix_dimension)
-        // {
-        //     cout << "here3";
-
-        //     openSquare(playerBoard, helpingBoard, x_coordinate + 1, y_coordinate - 1, matrix_dimension);
-        // }
-        // if (y_coordinate - 1 >= 0 && y_coordinate - 1 < matrix_dimension)
-        // {
-        //     cout << "here4";
-
-        //     openSquare(playerBoard, helpingBoard, x_coordinate, y_coordinate - 1, matrix_dimension);
-        // }
-        // if (x_coordinate - 1 >= 0 && x_coordinate - 1 < matrix_dimension && y_coordinate - 1 >= 0 && y_coordinate - 1 < matrix_dimension)
-        // {
-        //     cout << "here5";
-
-        //     openSquare(playerBoard, helpingBoard, x_coordinate - 1, y_coordinate - 1, matrix_dimension);
-        // }
-        // if (x_coordinate - 1 >= 0 && x_coordinate - 1 < matrix_dimension)
-        // {
-        //     cout << "here6";
-
-        //     openSquare(playerBoard, helpingBoard, x_coordinate - 1, y_coordinate, matrix_dimension);
-        // }
-        // if (x_coordinate - 1 >= 0 && x_coordinate - 1 < matrix_dimension && y_coordinate + 1 >= 0 && y_coordinate + 1 < matrix_dimension)
-        // {
-        //     cout << "here7";
-
-        //     openSquare(playerBoard, helpingBoard, x_coordinate - 1, y_coordinate + 1, matrix_dimension);
-        // }
-
+                }
+            } 
     }
 }
 
