@@ -57,7 +57,7 @@ bool hasMinesNeighbour(char helpingBoard[max_X_coordinate][max_Y_coordinate], in
 {
     if (y_coordinate + 1 >= 0 && y_coordinate + 1 < matrix_dimension)
     {
-        if (helpingBoard[x_coordinate][y_coordinate + 1] != '*')
+        if (helpingBoard[x_coordinate][y_coordinate + 1] == '@')
         {
             return true;
 
@@ -65,7 +65,7 @@ bool hasMinesNeighbour(char helpingBoard[max_X_coordinate][max_Y_coordinate], in
     }
     if (y_coordinate + 1 >= 0 && y_coordinate + 1 < matrix_dimension && x_coordinate + 1 >= 0 && x_coordinate + 1 < matrix_dimension)
     {
-        if (helpingBoard[x_coordinate + 1][y_coordinate + 1] != '*')
+        if (helpingBoard[x_coordinate + 1][y_coordinate + 1] == '@')
         {
             return true;
 
@@ -73,14 +73,14 @@ bool hasMinesNeighbour(char helpingBoard[max_X_coordinate][max_Y_coordinate], in
     }
     if (x_coordinate + 1 >= 0 && x_coordinate + 1 < matrix_dimension)
     {
-        if (helpingBoard[x_coordinate + 1][y_coordinate] != '*')
+        if (helpingBoard[x_coordinate + 1][y_coordinate] == '@')
         {
             return true;
         }
     }
     if (x_coordinate + 1 >= 0 && x_coordinate + 1 < matrix_dimension && y_coordinate - 1 >= 0 && y_coordinate - 1 < matrix_dimension)
     {
-        if (helpingBoard[x_coordinate + 1][y_coordinate - 1] != '*')
+        if (helpingBoard[x_coordinate + 1][y_coordinate - 1] == '@')
         {
             return true;
 
@@ -88,7 +88,7 @@ bool hasMinesNeighbour(char helpingBoard[max_X_coordinate][max_Y_coordinate], in
     }
     if (y_coordinate - 1 >= 0 && y_coordinate - 1 < matrix_dimension)
     {
-        if (helpingBoard[x_coordinate][y_coordinate - 1] != '*')
+        if (helpingBoard[x_coordinate][y_coordinate - 1] == '@')
         {
             return true;
 
@@ -96,14 +96,14 @@ bool hasMinesNeighbour(char helpingBoard[max_X_coordinate][max_Y_coordinate], in
     }
     if (x_coordinate - 1 >= 0 && x_coordinate - 1 < matrix_dimension && y_coordinate - 1 >= 0 && y_coordinate - 1 < matrix_dimension)
     {
-        if (helpingBoard[x_coordinate - 1][y_coordinate - 1] != '*')
+        if (helpingBoard[x_coordinate - 1][y_coordinate - 1] == '@')
         {
             return true;
         }
     }
     if (x_coordinate - 1 >= 0 && x_coordinate - 1 < matrix_dimension)
     {
-        if (helpingBoard[x_coordinate - 1][y_coordinate] != '*')
+        if (helpingBoard[x_coordinate - 1][y_coordinate] == '@')
         {
             return true;
 
@@ -111,7 +111,7 @@ bool hasMinesNeighbour(char helpingBoard[max_X_coordinate][max_Y_coordinate], in
     }
     if (x_coordinate - 1 >= 0 && x_coordinate - 1 < matrix_dimension && y_coordinate + 1 >= 0 && y_coordinate + 1 < matrix_dimension)
     {
-        if (helpingBoard[x_coordinate - 1][y_coordinate + 1] != '*')
+        if (helpingBoard[x_coordinate - 1][y_coordinate + 1] == '@')
         {
             return true;
         }
@@ -190,9 +190,6 @@ void addNumberToBoard(char board[max_X_coordinate][max_Y_coordinate], char helpi
 {
     int resultCountTheNumberOfMines = countTheNumberOfMines(helpingBoard, x_coordinate, y_coordinate, matrix_dimension);
     
-    // TODO; DROP the cin
-    cout << "resultCountTheNumberOfMines " << resultCountTheNumberOfMines;
-
     board[x_coordinate][y_coordinate] = (char)resultCountTheNumberOfMines;
 }
 
@@ -201,41 +198,41 @@ void makeSquareOpened(char board[max_X_coordinate][max_Y_coordinate], int x_coor
     board[x_coordinate][y_coordinate] = 'O';
 }
 
-bool isNeighbour(char helpingBoard[max_X_coordinate][max_Y_coordinate], int initialElementX, int initialElementY, int possibleNeighbourX, int possibleNeighbourY)
+bool isNeighbour(char helpingBoard[max_X_coordinate][max_Y_coordinate], int currentElementX, int currentElementY, int possibleNeighbourX, int possibleNeighbourY)
 {
-    if (initialElementX - 1 == possibleNeighbourX && initialElementY == possibleNeighbourY) {
+    if (currentElementX - 1 == possibleNeighbourX && currentElementY == possibleNeighbourY) {
         return true;
     }
 
-    if (initialElementX - 1 == possibleNeighbourX && initialElementY + 1 == possibleNeighbourY)
+    if (currentElementX == possibleNeighbourX && currentElementY - 1 == possibleNeighbourY)
     {
         return true;
     }
 
-    if (initialElementX == possibleNeighbourX && initialElementY + 1 == possibleNeighbourY)
+    if (currentElementX == possibleNeighbourX && currentElementY + 1 == possibleNeighbourY)
     {
         return true;
     }
 
-    if (initialElementX + 1 == possibleNeighbourX && initialElementY + 1 == possibleNeighbourY){
+    if (currentElementX + 1 == possibleNeighbourX && currentElementY + 1 == possibleNeighbourY){
         return true;
     }
 
-    if (initialElementX + 1 == possibleNeighbourX && initialElementY == possibleNeighbourY)
+    if (currentElementX + 1 == possibleNeighbourX && currentElementY == possibleNeighbourY)
     {
         return true;
     }
 
-    if (initialElementX + 1 == possibleNeighbourX && initialElementY - 1 == possibleNeighbourY) {
+    if (currentElementX + 1 == possibleNeighbourX && currentElementY - 1 == possibleNeighbourY) {
         return true;
     }
 
-    if (initialElementX - 1 == possibleNeighbourX && initialElementY + 1 == possibleNeighbourY)
+    if (currentElementX - 1 == possibleNeighbourX && currentElementY + 1 == possibleNeighbourY)
     {
         return true;
     }
 
-    if (initialElementX - 1 == possibleNeighbourX && initialElementY - 1 == possibleNeighbourY) {
+    if (currentElementX - 1 == possibleNeighbourX && currentElementY - 1 == possibleNeighbourY) {
         return true;
     }
 
@@ -257,8 +254,6 @@ bool openSquare(char playerBoard[max_X_coordinate][max_Y_coordinate], char helpi
         addNumberToBoard(playerBoard, helpingBoard, x_coordinate, y_coordinate, matrix_dimension);
 
         addNumberToBoard(helpingBoard, helpingBoard, x_coordinate, y_coordinate, matrix_dimension);
-
-        return true;
     }
 
     else
@@ -266,13 +261,6 @@ bool openSquare(char playerBoard[max_X_coordinate][max_Y_coordinate], char helpi
         makeSquareOpened(playerBoard, x_coordinate, y_coordinate);
         makeSquareOpened(helpingBoard, x_coordinate, y_coordinate);
 
-        cout << "Player board visualization:" << endl;
-        print(playerBoard, matrix_dimension);
-
-        cout << "Helping board visualization:"  << endl;
-        print(helpingBoard, matrix_dimension);
-
-        // Call openSquare for all possible neighbours that are not mines
         for (int i = 0; i < matrix_dimension; i++)
             {
                 for (int j = 0; j < matrix_dimension; j++)
@@ -284,6 +272,8 @@ bool openSquare(char playerBoard[max_X_coordinate][max_Y_coordinate], char helpi
                 }
             } 
     }
+
+    return true;
 }
 
 
@@ -439,17 +429,20 @@ int main()
 
             result = openSquare(playerBoard, helpingBoard, x_coordinate, y_coordinate, matrix_dimension);
 
-            if (result == false)
-            {
-                playing = false;
-                return 0;
-            }
-            
             cout << "Player board visualization:" << endl;
             print(playerBoard, matrix_dimension);
 
             cout << "Helping board visualization:"  << endl;
             print(helpingBoard, matrix_dimension);
+
+
+            if (result == false)
+            {
+                playing = false;
+
+                return 0;
+            }
+            
         }
 
         else if (command == "mark")
