@@ -287,6 +287,7 @@ void markSquresAsMines(char playerBoard[max_X_coordinate][max_Y_coordinate], int
 {
     playerBoard[x_coordinate][y_coordinate] = '!';
 }
+
 void unmarkSquresAsMines(char playerBoard[max_X_coordinate][max_Y_coordinate], int x_coordinate, int y_coordinate)
 {
     playerBoard[x_coordinate][y_coordinate] = '*';
@@ -339,7 +340,8 @@ void createPlayerBoard(int matrix_dimension, char playerBoard[max_X_coordinate][
         }
     }
 }
-bool validateCellIsMark(char playerBoard[max_X_coordinate][max_Y_coordinate], int x_coordinate, int y_coordinate)
+
+bool validateCellIsMarked(char playerBoard[max_X_coordinate][max_Y_coordinate], int x_coordinate, int y_coordinate)
 {
     return playerBoard[x_coordinate][y_coordinate] == '!';
 }
@@ -508,20 +510,31 @@ int main()
         }
         else if (command == "unmark")
         {
-            bool resultValidateCelIsMark = validateCellIsMark(playerBoard, x_coordinate, y_coordinate);
+            bool resultValidateCelIsMark = validateCellIsMarked(playerBoard, x_coordinate, y_coordinate);
             while (resultValidateCelIsMark == false)
             {
-                cout << "Cell is not marked! Enter another cooedinates!";
+                cout << "Cell is not marked! Enter another coordinates!";
                 cin >> x_coordinate >> y_coordinate;
-                resultValidateCelIsMark = validateCellIsMark(playerBoard, x_coordinate, y_coordinate);
+                resultValidateCelIsMark = validateCellIsMarked(playerBoard, x_coordinate, y_coordinate);
             }
 
             unmarkSquresAsMines(playerBoard, x_coordinate, y_coordinate);
+
+            cout << "Player board visualization:" << endl;
             print(playerBoard, matrix_dimension);
+
+            cout << "Helping board visualization:"  << endl;
+            print(helpingBoard, matrix_dimension);
+
         }
 
         if (command == "print") {
+
+            cout << "Player board visualization:" << endl;
             print(playerBoard, matrix_dimension);
+
+            cout << "Helping board visualization:"  << endl;
+            print(helpingBoard, matrix_dimension);
         }
     }
 }
