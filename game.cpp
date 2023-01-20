@@ -186,7 +186,7 @@ void addNumberToBoard(char board[max_X_coordinate][max_Y_coordinate], char helpi
 {
     int resultCountTheNumberOfMines = countTheNumberOfMines(helpingBoard, x_coordinate, y_coordinate, matrix_dimension);
     
-    board[x_coordinate][y_coordinate] = (char)resultCountTheNumberOfMines;
+    board[x_coordinate][y_coordinate] = 48+resultCountTheNumberOfMines;
 }
 
 void makeSquareOpened(char board[max_X_coordinate][max_Y_coordinate], int x_coordinate, int y_coordinate)
