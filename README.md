@@ -13,7 +13,5 @@ g++ game.cpp
 
 ### TODOs
 
-- mark & unmark
-- unresolve all TODOs
 - check the task description once again and see whether we've missed sth
 - add desciption to the repo
