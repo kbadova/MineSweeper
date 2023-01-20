@@ -14,10 +14,6 @@ bool isCellFree(char playerBoard[max_X_coordinate][max_Y_coordinate], int x_coor
     return playerBoard[x_coordinate][y_coordinate] == '*';
 }
 
-bool isCellOpened(char playerBoard[max_X_coordinate][max_Y_coordinate], int x_coordinate, int y_coordinate) {
-    return playerBoard[x_coordinate][y_coordinate] != '*';
-}
-
 void print(char playerBoard[max_X_coordinate][max_Y_coordinate], int matrix_dimension)
 {
     for (int i = 0; i < matrix_dimension; i++)
@@ -246,7 +242,7 @@ bool openSquare(char playerBoard[max_X_coordinate][max_Y_coordinate], char helpi
         cout << "End of game. This is a mine!" << endl;
         return false;
     }
- 
+
     bool resultHasMinesNeighbour = hasMinesNeighbour(helpingBoard, x_coordinate, y_coordinate, matrix_dimension);
 
     if (resultHasMinesNeighbour == true)
@@ -453,15 +449,13 @@ int main()
 
         if (command == "open")
         {
-            bool resultIsCellOpened = isCellOpened(playerBoard, x_coordinate, y_coordinate);
-            while (resultIsCellOpened == true)
+            bool resultIsCellFree = isCellFree(playerBoard, x_coordinate, y_coordinate);
+            while (resultIsCellFree == false)
             {
                 cout << "Cell is not free! Enter another coordinates!";
                 cin >> x_coordinate >> y_coordinate;
-                resultIsCellOpened = isCellOpened(playerBoard, x_coordinate, y_coordinate);
+                resultIsCellFree = isCellFree(playerBoard, x_coordinate, y_coordinate);
             }
-
-            // TODO: Check whether the cell is marked 
 
             result = openSquare(playerBoard, helpingBoard, x_coordinate, y_coordinate, matrix_dimension);
 
