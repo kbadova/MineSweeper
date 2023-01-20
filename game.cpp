@@ -344,6 +344,40 @@ bool validateCellIsMark(char playerBoard[max_X_coordinate][max_Y_coordinate], in
     return playerBoard[x_coordinate][y_coordinate] == '!';
 }
 
+bool allMinesAreMarked(char playerBoard[max_X_coordinate][max_Y_coordinate], char helpingBoard[max_X_coordinate][max_Y_coordinate], int matrix_dimension)
+{
+    for (int i = 0; i < matrix_dimension; i++)
+    {
+        for (int j = 0; j < matrix_dimension; j++)
+        {
+            if (helpingBoard[i][j] == '@' && playerBoard[i][j] != '!')
+            {
+                return false;
+            }
+
+        }
+    }
+
+    return true;
+}
+
+bool thereAreNoFreeSquares(char playerBoard[max_X_coordinate][max_Y_coordinate], int matrix_dimension)
+{
+     for (int i = 0; i < matrix_dimension; i++)
+    {
+        for (int j = 0; j < matrix_dimension; j++)
+        {
+            if (playerBoard[i][j] == '*')
+            {
+                return false;
+            }
+
+        }
+    }
+
+    return true;
+}
+
 int main()
 {
     char playerBoard[max_X_coordinate][max_Y_coordinate] = {};
@@ -456,7 +490,20 @@ int main()
             }
             markSquresAsMines(playerBoard, x_coordinate, y_coordinate);
 
+            if (allMinesAreMarked(playerBoard, helpingBoard, matrix_dimension) && thereAreNoFreeSquares(playerBoard, matrix_dimension)) 
+            {
+                cout << "YOU WIN!";
+
+                playing = false;
+
+                return 0;
+            }
+
+            cout << "Player board visualization:" << endl;
             print(playerBoard, matrix_dimension);
+
+            cout << "Helping board visualization:"  << endl;
+            print(helpingBoard, matrix_dimension);
 
         }
         else if (command == "unmark")
