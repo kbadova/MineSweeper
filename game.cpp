@@ -204,42 +204,42 @@ void makeSquareOpened(char board[max_X_coordinate][max_Y_coordinate], int x_coor
 bool isNeighbour(char helpingBoard[max_X_coordinate][max_Y_coordinate], int initialElementX, int initialElementY, int possibleNeighbourX, int possibleNeighbourY)
 {
     if (initialElementX - 1 == possibleNeighbourX && initialElementY == possibleNeighbourY) {
-        return true
+        return true;
     }
 
     if (initialElementX - 1 == possibleNeighbourX && initialElementY + 1 == possibleNeighbourY)
     {
-        return true
-    };
+        return true;
+    }
 
     if (initialElementX == possibleNeighbourX && initialElementY + 1 == possibleNeighbourY)
     {
-        return true
-    };
+        return true;
+    }
 
     if (initialElementX + 1 == possibleNeighbourX && initialElementY + 1 == possibleNeighbourY){
-        return true
-    };
+        return true;
+    }
 
     if (initialElementX + 1 == possibleNeighbourX && initialElementY == possibleNeighbourY)
     {
-        return true
-    };
+        return true;
+    }
 
     if (initialElementX + 1 == possibleNeighbourX && initialElementY - 1 == possibleNeighbourY) {
-        return true
-    };
+        return true;
+    }
 
     if (initialElementX - 1 == possibleNeighbourX && initialElementY + 1 == possibleNeighbourY)
     {
-        return true
-    };
+        return true;
+    }
 
     if (initialElementX - 1 == possibleNeighbourX && initialElementY - 1 == possibleNeighbourY) {
-        return true
-    };
+        return true;
+    }
 
-    return false
+    return false;
 }
 
 bool openSquare(char playerBoard[max_X_coordinate][max_Y_coordinate], char helpingBoard[max_X_coordinate][max_Y_coordinate], int x_coordinate, int y_coordinate, int matrix_dimension)
